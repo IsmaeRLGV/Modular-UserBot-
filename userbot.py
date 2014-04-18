@@ -112,7 +112,7 @@ while True:
 					p_mode=modes.parce_channel_modes(j.split(" MODE %s "%chan)[1])
 					for i in p_mode:
 						if i[0] == "+":
-							if i[1]=="o"and arrays.MOD_aop[0]=="on" and user!=arrays.NICK:
+							if i[1]=="o"and arrays.MOD_aop[0]=="on" and user!=arrays.NICK and i[2]!=arrays.NICK:
 								client.mode(chan,"-o",i[2])
 						else:
 							if i[1]=="o" and i[2]==arrays.NICK:
