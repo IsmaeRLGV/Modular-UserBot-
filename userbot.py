@@ -69,7 +69,7 @@ while True:
 			if type(a) == type(int(0)):
 				if a==376:
 					client.Join(arrays.CHAN)
-					client.send_msg("PRIVMSG NickServ :IDENTIFY f4mil1a")
+					client.send_msg("PRIVMSG NickServ :IDENTIFY -")
 				if a==401:
 					mlenx=[] # Debug
 				if a==403: 
