@@ -19,8 +19,3 @@ MOD_BadW = ["off"]
 MOD_ukik = ["off"]
 MOD_aop  = ["off"]
 
-# Ayuda
-ayuda = ["A:Akick[bot]", "e:excepcion[bot]", "f:fl,flags[bot]",
-         "j:j(join)", "k:K(kick)", "m:mode", "o:opme,op,deop",
-         "p:part(p)", "q:quit", "r:b(ban),ub(unban)", "t:t(topic)",
-         "s:st(set[Cs],mod)", "v:v(voice),dv(devoice)"]
