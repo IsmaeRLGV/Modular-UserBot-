@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from API import arrays,db,modes,connection,client,google,evaluate,privs,WAI,sgb
+from API import arrays,db,modes,connection,client,google,evaluate,privs,WAI,sgb,ayuda
 import datetime,string,socket,time,re
 s=connection.s
 readbuffer=connection.readbuffer
@@ -11,7 +11,7 @@ while True:
 	temp=string.split(readbuffer, "\n")
 	readbuffer=temp.pop( )
 	for j in temp:
-		print j
+		#print j
 		j=string.rstrip(j)
 		try: # Sistema de entrada de informacion.
 			mlen = j.split()
@@ -25,7 +25,7 @@ while True:
 			mlex=j.split("%s %s %s :"%(mlen[0],mlen[1],mlen[2]))[1]
 			#print "|||-++%s"%mlex
 			mlenx=mlex.split()
-			#print "[%s] <%s> %s\r"%(time2, user, mlex)
+			print "[%s] <%s> %s\r"%(time2, user, mlex)
 		except IndexError:
 			if mlen[0]=="PING":
 				mlex="None"
@@ -46,10 +46,15 @@ while True:
 			if mlenx[0].find("%sadmin"%arrays.comd) != -1:
 				client.privmsg(user, privs.admin([mlenx[1],mlenx[2]],user))
 			if mlenx[0].find("%sinfo" % arrays.comd) != -1:
-				if privs.seguir("F",user,host):
-					try: i=int(mlenx[1])
-					except ValueError: i=0
-					client.privmsg(user, privs.info(i,mlenx[2]))	
+				try: i=int(mlenx[2])
+				except (IndexError,ValueError): i=None
+				if type(i) == type(0):
+					if privs.seguir("F",user,host):
+						client.notice(user, privs.info(i,mlenx[1]))
+				else:
+					client.notice(user, "status: %s"%privs.info(1, mlenx[1])[1])
+					client.notice(user, "Flags: %s"%"".join(privs.info(4, mlenx[1])))
+					client.notice(user, "Points: %s"%privs.info(5, mlenx[1]))
 			if mlenx[0].find("%sflags" % arrays.comd) != -1:
 				if privs.seguir("f",user,host) or privs.seguir("F",user,host):
 					p_mode=modes.parce_nick_modes(mlenx[1])
@@ -181,6 +186,13 @@ while True:
 				element=mlex.split("%sgoogle "%arrays.comd)[1]
 				google.google(chan,element).search()
 			if mlenx[0].find("%sip"%arrays.comd)!=-1:
-				WAI.ip_info(chan,mlenx[1])															
+				WAI.ip_info(chan,mlenx[1])
+			if mlenx[0].find("%sayuda"%arrays.comd) != -1:
+				try:
+					ayuda.ayuda(user, mlenx[1])
+				except IndexError:
+					client.notice(user, "Los comandos inician por '%s'"%arrays.comd)
+					client.notice(user, "comandos disponibles: v, dv, op, deop, k, ctrl, FL, st, register, logout, login, admin, info, mod, imagen, google, ip")
+					client.notice(user, "Para mas información acerca de un comando enviar ayuda <comando>")
 		except (IndexError,NameError):
-			pass	
+			pass
