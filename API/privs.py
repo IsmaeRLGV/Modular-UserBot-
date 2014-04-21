@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 import arrays,re,db,client
 def IsRegister(user):
-	InDB=re.compile(r'%s' % user, re.IGNORECASE)
+	try:
+		InDB=re.compile(r'%s' % user, re.IGNORECASE)
+	except sre_constants.error:
+		InDB=re.compile(r'Fgt5dR5s333', re.IGNORECASE)
 	isRegister=False
 	while isRegister == False:
 		for i in arrays.DB_user:
